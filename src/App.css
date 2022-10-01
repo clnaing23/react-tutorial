@@ -40,3 +40,18 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+.container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: auto;
+}
+.card{
+  height: auto;
+  width: auto;
+}
+.card-text{
+  font-size: 0.75vw;
+}
+.card-title{
+  font-size: 1vw;
+}

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Banner from './components/Banner';
 import CourseList from './components/CourseList';
+import 'bootstrap/dist/css/bootstrap.min.css';
 const schedule = {
   "title": "CS Courses for 2018-2019",
   "courses": {
@@ -32,15 +33,18 @@ const schedule = {
     }
   }
 };
+const formatCourse = new Intl.NumberFormat([], { style: 'currency', currency: 'USD' }).format;
+
 const App = () => {
 
   return (
     <div className="App">
       <header className="App-header">
         <Banner title={schedule.title} ></Banner>
-        <div>
-          { Object.entries(schedule.courses).map((course) => <CourseList key= {course[0]} term={course[1].term} number={course[1].number} title={course[1].title}></CourseList>) }
-        </div>
+        <div className='container'>
+          {Object.entries(schedule.courses).map(course => <CourseList key={course[0]} term={course[1].term} number={course[1].number} title={course[1].title} meets={course[1].meets} />)}
+          {/* { Object.entries(schedule.courses).map((course) => <CourseList key= {course[0]} term={course[1].term} number={course[1].number} title={course[1].title}></CourseList>) } */}
+      </div>
       </header>
     </div>
   );
