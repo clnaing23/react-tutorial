@@ -4,7 +4,12 @@ import './App.css';
 import Banner from './components/Banner';
 import CourseList from './components/CourseList';
 import 'bootstrap/dist/css/bootstrap.min.css';
-const schedule = {
+import { useQuery } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useJsonQuery } from './utilities/fetch';
+
+
+const schedule2 = {
   "title": "CS Courses for 2018-2019",
   "courses": {
     "F101" : {
@@ -33,21 +38,44 @@ const schedule = {
     }
   }
 };
-const formatCourse = new Intl.NumberFormat([], { style: 'currency', currency: 'USD' }).format;
+const url = 'https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php'
+const fetchJson  = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) throw response;
+  return response.json();
+};
+
+// export const useJsonQuery = (url) => {
+//   const { data, isLoading, error } = useQuery([url], () => fetchJson(url));
+//   return [ data, isLoading, error ];
+// };
+const Schedule = () => {
+  const [data, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+
+  if (error) return <h1>Error loading user data: {`${error}`}</h1>;
+  if (isLoading) return <h1>Loading user data...</h1>;
+  if (!data) return <h1>No user data found</h1>;
+
+  return (<div className="App">
+  <header className="App-header">
+    <Banner title={data.title} ></Banner>
+    <div className='container'>
+      {Object.entries(data.courses).map(course => <CourseList key={course[0]} term={course[1].term} number={course[1].number} title={course[1].title} meets={course[1].meets} />)}
+    </div>
+  </header>
+</div>);
+}
+// console.log(Schedule())
+console.log(fetchJson(url))
+const queryClient = new QueryClient();
 
 const App = () => {
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Banner title={schedule.title} ></Banner>
-        <div className='container'>
-          {Object.entries(schedule.courses).map(course => <CourseList key={course[0]} term={course[1].term} number={course[1].number} title={course[1].title} meets={course[1].meets} />)}
-          {/* { Object.entries(schedule.courses).map((course) => <CourseList key= {course[0]} term={course[1].term} number={course[1].number} title={course[1].title}></CourseList>) } */}
-      </div>
-      </header>
-    </div>
-  );
+    <QueryClientProvider client={queryClient}>
+        <Schedule/>
+    </QueryClientProvider>
+    );
 };
 
 export default App;

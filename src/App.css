@@ -42,16 +42,15 @@ button {
 }
 .container {
   display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fill, 14rem);
 }
 .card{
   height: auto;
   width: auto;
 }
-.card-text{
+/* .card-text{
   font-size: 0.75vw;
 }
 .card-title{
   font-size: 1vw;
-}
+} */
