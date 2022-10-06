@@ -1,14 +1,15 @@
 import React from 'react';
 import './../App.css';
-
+import './Courselist.css'
 const CourseList = (props) => {
   return (
-    // <p>{props.term} CS {props.number}: {props.title} </p>
-    <div className="card">
+    <div className="card m-1 p-2">
       <div className="card-body">
-        <h5 className="card-title">{props.term} CS {props.number}</h5>
-        <p className="card-text">{props.title}</p>
-        <p className="card-text">{props.meets}</p>
+        <h5 className="card-title">{props.info.term} CS {props.info.number}</h5>
+        <p className="text-center">{props.info.title}</p>
+      </div>
+      <div className="card-footer">
+        <p className="text-center">{props.info.meets}</p>
       </div>
     </div>
   );

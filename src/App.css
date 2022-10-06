@@ -42,15 +42,21 @@ button {
 }
 .container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 14rem);
+  grid-template-columns: repeat(auto-fill, 15rem);
+  column-gap: 15px;
+  row-gap: 15px;
 }
-.card{
-  height: auto;
-  width: auto;
+.card.m-1.p-2 .card-title {
+  width: 120%;
+  height: 2vw;
+  object-fit: center;
 }
-/* .card-text{
-  font-size: 0.75vw;
+
+.card.m-1.p-2 .card-text {
+  width: 100%;
+  height: 6vw;
+  object-fit: center;
 }
-.card-title{
-  font-size: 1vw;
-} */
+.test{
+  color:deeppink
+}

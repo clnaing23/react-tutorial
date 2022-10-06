@@ -10,6 +10,7 @@ const fetchJson = async (url) => {
   
   export const useJsonQuery = (url) => {
     const { data, isLoading, error } = useQuery([url], () => fetchJson(url));
+    
     return [ data, isLoading, error ];
   };
   

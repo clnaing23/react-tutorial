@@ -2,6 +2,7 @@ import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Banner from './components/Banner';
+import Page from './components/Page';
 import CourseList from './components/CourseList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useQuery } from '@tanstack/react-query';
@@ -60,20 +61,22 @@ const Schedule = () => {
   <header className="App-header">
     <Banner title={data.title} ></Banner>
     <div className='container'>
-      {Object.entries(data.courses).map(course => <CourseList key={course[0]} term={course[1].term} number={course[1].number} title={course[1].title} meets={course[1].meets} />)}
+      <Page data={data}></Page>
     </div>
   </header>
 </div>);
 }
 // console.log(Schedule())
-console.log(fetchJson(url))
 const queryClient = new QueryClient();
 
 const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <div className='container'>
         <Schedule/>
+      </div>
+        
     </QueryClientProvider>
     );
 };
