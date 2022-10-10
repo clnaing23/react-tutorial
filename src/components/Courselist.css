@@ -2,8 +2,6 @@
 .courselist {
     display: grid;
     grid-template-columns: repeat(auto-fill, 15rem);
-    display: inline-block;
-    float: none;
 }
 .course .selected {
     background-color:lemonchiffon;

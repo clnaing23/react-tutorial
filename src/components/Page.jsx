@@ -4,6 +4,9 @@ import CourseList from './CourseList';
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Courselist.css'
+import Modal from './Modal';
+import Cart from './Cart';
+
 
 const terms = {
   Fall: 'Fall', 
@@ -31,15 +34,21 @@ const terms = {
 const Page = ({data}) => {
   const [selection, setSelection] = useState(() => Object.keys(terms)[0]);
   const [selected, setSelected] = useState([]);
+  const [open, setOpen] = useState(false);
+  const openModal = () => setOpen(true);
+  const closeModal = () => setOpen(false);
   const toggleSelected = (item) => setSelected(
     selected.includes(item)
     ? selected.filter(x => x !== item)
     : [...selected, item]
   );
-
-
+  console.log(data.courses["F110"])
     return (
       <div>
+        <button className="btn btn-outline-dark" onClick={openModal}><i className="bi bi-cart4"></i>Cart</button>
+        <Modal open={open} close={closeModal}>
+          <Cart selected={selected} data = {data.courses}/>
+        </Modal>
         <Selector selection={selection} setSelection={setSelection} />
         <div className="courselist">
           {Object.entries(data.courses).filter(course => course[1].term === selection).map(([key, data]) => <CourseList id = {key} info={data} selected={selected} toggleSelected={toggleSelected} />)}      
