@@ -21,4 +21,12 @@
 .modal-header {
     margin-left: auto;
   }
-  
+.btn-group{
+  margin: 10px;
+}
+.btn .btn-success .mb-1 .p-2{
+  padding: 10px;
+}
+.btn-check{
+  margin: 10px;
+}

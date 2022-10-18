@@ -9,6 +9,7 @@ import Cart from './Cart';
 import {checkConflict} from '../utilities/checkTime'
 
 
+
 const terms = {
   Fall: 'Fall', 
   Winter: 'Winter',
@@ -18,7 +19,7 @@ const terms = {
   const Selector = ({selection, setSelection}) => (
     <div className="btn-group">
       { 
-        Object.keys(terms).map(term => <TermButton key={term} term={term} selection={selection} setSelection={setSelection} />)
+        Object.keys(terms).map(term => <TermButton className="term-btn" key={term} term={term} selection={selection} setSelection={setSelection} />)
       }
     </div>
   );
@@ -56,9 +57,11 @@ const Page = ({data}) => {
         <Modal open={open} close={closeModal}>
           <Cart selected={selected} data = {data.courses}/>
         </Modal>
-        <Selector selection={selection} setSelection={setSelection} />
+        <div className='btn-term'>
+          <Selector selection={selection} setSelection={setSelection} />
+        </div>
         <div className="courselist">
-          {Object.entries(data.courses).filter(course => course[1].term === selection).map(([key, data]) => <CourseList id = {key} info={data} selected={selected} invalid={invalid} toggleSelected={toggleSelected} />)}      
+          {Object.entries(data.courses).filter(course => course[1].term === selection).map(([key, data]) => <CourseList id = {key} course={data} selected={selected} invalid={invalid} toggleSelected={toggleSelected} />)}      
         </div>  
       </div>
     );
