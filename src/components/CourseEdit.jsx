@@ -1,6 +1,6 @@
 import { useFormData } from '../utilities/useFormData';
 import { BrowserRouter, Routes, Route, useParams, useNavigate } from 'react-router-dom';
-
+import { useDbData } from "../utilities/firebase";
 
 
 const validateUserData = (key, val) => {
@@ -36,6 +36,12 @@ const ButtonBar = ({message, disabled}) => {
 const CourseEdit = ({courses}) => {
   const { id } = useParams();
   const [state, change] = useFormData(validateUserData, courses[id])
+  const [data, error] = useDbData('/');
+
+  if (error) return <h1>Error loading data: {error.toString()}</h1>;
+  if (data === undefined) return <h1>Loading data...</h1>;
+  if (!data) return <h1>No data found</h1>;
+
   const submit = (evt) => {
     evt.preventDefault();
     if (!state.errors) {
