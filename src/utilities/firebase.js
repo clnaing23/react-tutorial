@@ -1,5 +1,7 @@
 import { getDatabase, onValue, ref, update } from "firebase/database";
 import { useCallback, useEffect, useState } from "react";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -61,4 +63,18 @@ export const useDbUpdate = (path) => {
   );
 
   return [updateData, result];
+};
+
+export const signInWithGoogle = () => {
+  signInWithPopup(getAuth(app), new GoogleAuthProvider());
+};
+const firebaseSignOut = () => signOut(getAuth(app));
+export { firebaseSignOut as signOut };
+
+export const useAuthState = () => {
+  const [user, setUser] = useState();
+
+  useEffect(() => onAuthStateChanged(getAuth(app), setUser));
+
+  return [user];
 };

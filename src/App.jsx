@@ -10,23 +10,29 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useJsonQuery } from './utilities/fetch';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CourseEdit from './components/CourseEdit';
+import Auth from './components/Auth';
+import { useAuthState } from './utilities/firebase';
 
 
 const Schedule = () => {
   const [data, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
-
+  const [user] = useAuthState()
   if (error) return <h1>Error loading user data: {`${error}`}</h1>;
   if (isLoading) return <h1>Loading user data...</h1>;
   if (!data) return <h1>No user data found</h1>;
 
   return (<div className="App">
   <header className="App-header">
-    <Banner title={data.title} ></Banner>
+    <nav>
+      <Banner title={data.title} ></Banner>
+      <Auth/>
+    </nav>
+    
     <div className='container'>
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Page data={data}></Page>} />
-        <Route path="/courses/:id" element={<CourseEdit courses={data.courses}/>} />
+        {user ? <Route path="/courses/:id" element={<CourseEdit courses={data.courses}/>} /> : null}
       </Routes>
     </BrowserRouter>
     </div>

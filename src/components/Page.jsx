@@ -7,6 +7,7 @@ import './Courselist.css'
 import Modal from './Modal';
 import Cart from './Cart';
 import {checkConflict} from '../utilities/checkTime'
+import { useAuthState } from '../utilities/firebase';
 
 
 
