@@ -7,7 +7,6 @@ import './Courselist.css'
 import Modal from './Modal';
 import Cart from './Cart';
 import {checkConflict} from '../utilities/checkTime'
-import { useAuthState } from '../utilities/firebase';
 
 
 
@@ -34,7 +33,7 @@ const terms = {
     </div>
   );
   
-const Page = ({data}) => {
+const Page = ({profile, data}) => {
   const [selection, setSelection] = useState(() => Object.keys(terms)[0]);
   const [selected, setSelected] = useState([]);
   const [invalid, setInvalid] = useState([]);
@@ -62,7 +61,7 @@ const Page = ({data}) => {
           <Selector selection={selection} setSelection={setSelection} />
         </div>
         <div className="courselist">
-          {Object.entries(data.courses).filter(course => course[1].term === selection).map(([key, data]) => <CourseList id = {key} course={data} selected={selected} invalid={invalid} toggleSelected={toggleSelected} />)}      
+          {Object.entries(data.courses).filter(course => course[1].term === selection).map(([key, data]) => <CourseList id = {key} profile = {profile} course={data} selected={selected} invalid={invalid} toggleSelected={toggleSelected} />)}      
         </div>  
       </div>
     );
